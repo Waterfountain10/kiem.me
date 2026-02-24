@@ -37,7 +37,8 @@ pub fn render_experience(frame: &mut Frame, area: Rect, app: &App, border_color:
         Qualcomm — (Incoming Fall 2026) Compiler Toolchain Intern\n\
         \n\
         - C++, ARM_Assembly\n\
-        - LLVM-based toolchains \n\";
+        - LLVM-based toolchains\n\
+        ";
 
     let block = Paragraph::new(text)
         .scroll((app.scroll, 0))
