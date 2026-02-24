@@ -24,17 +24,20 @@ pub fn render_content(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
 }
 
 pub fn render_experience(frame: &mut Frame, area: Rect, app: &App, border_color: Color) {
-    let text = "Shopify — Software Engineering Intern\n\
-         \n\
-         - Backend systems\n\
-         - Infrastructure tooling\n\
-         - Production-grade codebases\n\
-         \n\
-         Qualcomm — Compiler Toolchain Intern\n\
-         \n\
-         - LLVM-based toolchains\n\
-         - Code generation\n\
-         - Performance-sensitive systems\n";
+    let text = "
+        OneSpan — BackEnd Developer Intern\n\
+        \n\
+        - SpringBoot, Terraform\n\
+        - Cloud Microservices Team\n\
+        Shopify — (Incoming Summer 2026) Infra Intern\n\
+        \n\
+        - Golang, Ruby\n\
+        - Distributed Sytems\n\
+        \n\
+        Qualcomm — (Incoming Fall 2026) Compiler Toolchain Intern\n\
+        \n\
+        - C++, ARM_Assembly\n\
+        - LLVM-based toolchains \n\";
 
     let block = Paragraph::new(text)
         .scroll((app.scroll, 0))
