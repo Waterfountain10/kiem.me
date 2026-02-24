@@ -29,8 +29,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         if event::poll(Duration::from_millis(200))? {
             if let Event::Key(key) = event::read()? {
                 match key.code {
+                    // quit
                     KeyCode::Char('q') => break,
+
+                    // set section to any letter 'c'
                     KeyCode::Char(c) => app.set_section(c),
+
+                    // j and k to navigate only in projects
+                    KeyCode::Char('j') => {
+                        if app.section == app::Section::Projects {
+                            app.next_project();
+                        }
+                    }
+                    KeyCode::Char('k') => {
+                        if app.section == app::Section::Projects {
+                            app.previous_project();
+                        }
+                    }
                     _ => {}
                 }
             }
