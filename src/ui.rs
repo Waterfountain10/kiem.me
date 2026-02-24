@@ -40,22 +40,25 @@ fn render_nav(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
 pub fn draw(frame: &mut Frame, app: &App) {
     let size = frame.size();
 
-    let outer = Block::default()
+    let outer = &Block::default()
         .title(" kiem.me ")
         .borders(Borders::ALL)
         .border_style(Style::default().fg(Color::DarkGray));
 
     frame.render_widget(outer, size);
 
+    // IMPORTANT: inner drawing area
+    let inner = outer.inner(size);
+
     let layout = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
             Constraint::Length(2), // nav
-            Constraint::Length(8), // header
+            Constraint::Length(6), // header
             Constraint::Min(0),    // body
             Constraint::Length(1), // footer
         ])
-        .split(size);
+        .split(inner);
 
     render_nav(frame, layout[0], app);
     render_header(frame, layout[1]);

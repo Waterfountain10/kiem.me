@@ -34,13 +34,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                     // j and k to navigate only in projects ------------------------------------------------------------------------
                     KeyCode::Char('j') => {
-                        if app.section == app::Section::Projects {
+                        if app.section == Section::Projects && app.view_mode == ViewMode::Normal {
                             app.next_project();
+                        } else {
+                            app.scroll_down();
                         }
                     }
+
                     KeyCode::Char('k') => {
-                        if app.section == app::Section::Projects {
+                        if app.section == Section::Projects && app.view_mode == ViewMode::Normal {
                             app.previous_project();
+                        } else {
+                            app.scroll_up();
                         }
                     }
 

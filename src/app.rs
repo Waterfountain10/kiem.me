@@ -18,6 +18,7 @@ pub struct App {
     pub view_mode: ViewMode,
     pub project_index: usize,
     pub projects: Vec<&'static str>,
+    pub scroll: u16,
 }
 
 impl App {
@@ -27,6 +28,7 @@ impl App {
             view_mode: ViewMode::Normal,
             project_index: 0,
             projects: vec!["Glazel", "GameDaddy", "DecentClang"],
+            scroll: 0,
         }
     }
 
@@ -62,5 +64,15 @@ impl App {
 
     pub fn back(&mut self) {
         self.view_mode = ViewMode::Normal;
+    }
+
+    pub fn scroll_down(&mut self) {
+        self.scroll += 1;
+    }
+
+    pub fn scroll_up(&mut self) {
+        if self.scroll > 0 {
+            self.scroll -= 1;
+        }
     }
 }
