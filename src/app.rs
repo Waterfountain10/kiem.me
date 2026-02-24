@@ -7,8 +7,15 @@ pub enum Section {
     Contact,
 }
 
+#[derive(Clone, Copy, PartialEq)]
+pub enum ViewMode {
+    Normal,
+    ProjectDetail,
+}
+
 pub struct App {
     pub section: Section,
+    pub view_mode: ViewMode,
     pub project_index: usize,
     pub projects: Vec<&'static str>,
 }
@@ -17,13 +24,15 @@ impl App {
     pub fn new() -> Self {
         Self {
             section: Section::Home,
+            view_mode: ViewMode::Normal,
             project_index: 0,
             projects: vec!["Glazel", "GameDaddy", "DecentClang"],
         }
     }
 
-    pub fn set_section(&mut self, index: char) {
-        self.section = match index {
+    pub fn set_section(&mut self, key: char) {
+        self.view_mode = ViewMode::Normal;
+        self.section = match key {
             '1' => Section::Home,
             '2' => Section::Projects,
             '3' => Section::Experience,
@@ -43,5 +52,15 @@ impl App {
         if self.project_index > 0 {
             self.project_index -= 1;
         }
+    }
+
+    pub fn open_project(&mut self) {
+        if self.section == Section::Projects {
+            self.view_mode = ViewMode::ProjectDetail;
+        }
+    }
+
+    pub fn back(&mut self) {
+        self.view_mode = ViewMode::Normal;
     }
 }
