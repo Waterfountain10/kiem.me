@@ -83,9 +83,6 @@ fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, bor
          LinkedIn\n\
          https://www.linkedin.com/in/william-k-lafond/\n\
          \n\
-         Resume\n\
-         https://kiem.me/resume.pdf\n\
-         \n\
          Email\n\
          william.lafond@mail.mcgill.ca\n";
 

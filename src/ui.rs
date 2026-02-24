@@ -1,5 +1,7 @@
 use crate::app::{App, Section};
-use crate::components::{content::render_content, footer::render_footer, header::render_header};
+use crate::components::{
+    content::render_content, footer::render_footer, header::render_header, status::render_status,
+};
 use ratatui::{
     Frame,
     layout::{Constraint, Direction, Layout},
@@ -47,7 +49,7 @@ pub fn draw(frame: &mut Frame, app: &App) {
 
     frame.render_widget(outer, size);
 
-    // IMPORTANT: inner drawing area
+    // IMPORTANT: inner drawing area (never changes)
     let inner = outer.inner(size);
 
     let layout = Layout::default()
@@ -56,12 +58,14 @@ pub fn draw(frame: &mut Frame, app: &App) {
             Constraint::Length(2), // nav
             Constraint::Length(6), // header
             Constraint::Min(0),    // body
-            Constraint::Length(1), // footer
+            Constraint::Length(3), // status (bordered)
+            Constraint::Length(1), // footer hints
         ])
         .split(inner);
 
     render_nav(frame, layout[0], app);
     render_header(frame, layout[1]);
     render_content(frame, layout[2], app);
-    render_footer(frame, layout[3]);
+    render_status(frame, layout[3], app);
+    render_footer(frame, layout[4]);
 }
