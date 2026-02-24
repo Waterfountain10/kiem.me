@@ -2,6 +2,7 @@ use crate::app::{App, Section, ViewMode};
 use ratatui::{
     Frame,
     layout::{Constraint, Direction, Layout},
+    prelude::Rect,
     style::{Color, Modifier, Style},
     text::{Line, Span},
     widgets::{Block, Borders, List, ListItem, Paragraph},
@@ -10,14 +11,14 @@ use ratatui::{
 pub fn render_content(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
     match app.section {
         Section::Projects => render_projects(frame, area, app),
-        Section::Home => render_home(frame, area),
-        Section::Experience => render_experience(frame, area),
-        Section::Systems => render_systems(frame, area),
-        Section::Contact => render_contact(frame, area),
+        Section::Home => render_home(frame, area, app),
+        Section::Experience => render_experience(frame, area, app),
+        Section::Systems => render_systems(frame, area, app),
+        Section::Contact => render_contact(frame, area, app),
     }
 }
 
-fn render_experience(frame: &mut Frame, area: ratatui::layout::Rect) {
+pub fn render_experience(frame: &mut Frame, area: Rect, app: &App) {
     let text = "Shopify — Software Engineering Intern\n\
          \n\
          - Backend systems\n\
@@ -31,6 +32,7 @@ fn render_experience(frame: &mut Frame, area: ratatui::layout::Rect) {
          - Performance-sensitive systems\n";
 
     let block = Paragraph::new(text)
+        .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
             Block::default()
@@ -42,7 +44,7 @@ fn render_experience(frame: &mut Frame, area: ratatui::layout::Rect) {
     frame.render_widget(block, area);
 }
 
-fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect) {
+fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
     let text = "Systems Focus\n\
          \n\
          - Cache invalidation strategies\n\
@@ -57,6 +59,7 @@ fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect) {
          Build small, composable, observable systems.\n";
 
     let block = Paragraph::new(text)
+        .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
             Block::default()
@@ -68,20 +71,21 @@ fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect) {
     frame.render_widget(block, area);
 }
 
-fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect) {
+fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
     let text = "GitHub\n\
-         https://github.com/kiemlafond\n\
+         https://github.com/Waterfountain10\n\
          \n\
          LinkedIn\n\
-         https://linkedin.com/in/...\n\
+         https://www.linkedin.com/in/william-k-lafond/\n\
          \n\
          Resume\n\
          https://kiem.me/resume.pdf\n\
          \n\
          Email\n\
-         william.kiem@example.com\n";
+         william.lafond@mail.mcgill.ca\n";
 
     let block = Paragraph::new(text)
+        .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
             Block::default()
@@ -93,7 +97,7 @@ fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect) {
     frame.render_widget(block, area);
 }
 
-fn render_home(frame: &mut Frame, area: ratatui::layout::Rect) {
+fn render_home(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
     let text = "Embedded Systems Engineer\n\
          \n\
          Incoming Shopify × Qualcomm\n\
@@ -105,6 +109,7 @@ fn render_home(frame: &mut Frame, area: ratatui::layout::Rect) {
          - Infrastructure tooling\n";
 
     let block = Paragraph::new(text)
+        .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
             Block::default()
@@ -191,6 +196,7 @@ fn render_project_detail(frame: &mut Frame, area: ratatui::layout::Rect, app: &A
     };
 
     let block = Paragraph::new(detail_text)
+        .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
             Block::default()

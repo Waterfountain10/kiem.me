@@ -4,7 +4,7 @@ mod app;
 mod components;
 mod ui;
 
-use app::App;
+use app::{App, Section, ViewMode};
 use crossterm::{
     event::{self, Event, KeyCode},
     execute,
