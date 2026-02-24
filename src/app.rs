@@ -1,4 +1,4 @@
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub enum Section {
     Home,
     Projects,
@@ -9,12 +9,16 @@ pub enum Section {
 
 pub struct App {
     pub section: Section,
+    pub project_index: usize,
+    pub projects: Vec<&'static str>,
 }
 
 impl App {
     pub fn new() -> Self {
         Self {
             section: Section::Home,
+            project_index: 0,
+            projects: vec!["Glazel", "GameDaddy", "DecentClang"],
         }
     }
 
@@ -27,5 +31,17 @@ impl App {
             '5' => Section::Contact,
             _ => self.section,
         };
+    }
+
+    pub fn next_project(&mut self) {
+        if self.project_index + 1 < self.projects.len() {
+            self.project_index += 1;
+        }
+    }
+
+    pub fn previous_project(&mut self) {
+        if self.project_index > 0 {
+            self.project_index -= 1;
+        }
     }
 }
