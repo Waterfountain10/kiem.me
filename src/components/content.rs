@@ -24,23 +24,45 @@ pub fn render_content(frame: &mut Frame, area: ratatui::layout::Rect, app: &App)
 }
 
 pub fn render_experience(frame: &mut Frame, area: Rect, app: &App, border_color: Color) {
-    let text = "
-        OneSpan — BackEnd Developer Intern\n\
-        \n\
-        - SpringBoot, Terraform\n\
-        - Cloud Microservices Team\n\
-        Shopify — (Incoming Summer 2026) Infra Intern\n\
-        \n\
-        - Golang, Ruby\n\
-        - Distributed Sytems\n\
-        \n\
-        Qualcomm — (Incoming Fall 2026) Compiler Toolchain Intern\n\
-        \n\
-        - C++, ARM_Assembly\n\
-        - LLVM-based toolchains\n\
-        ";
+    let mustard = Color::Rgb(184, 134, 11);
 
-    let block = Paragraph::new(text)
+    let lines = vec![
+        Line::from(Span::styled(
+            "OneSpan — Backend Developer Intern",
+            Style::default().fg(mustard).add_modifier(Modifier::BOLD),
+        )),
+        Line::from(""),
+        Line::from("  • Spring Boot, Terraform"),
+        Line::from("  • Cloud Microservices Team"),
+        Line::from(""),
+        Line::from(Span::styled(
+            "Shopify — Incoming Summer 2026 (Infrastructure Intern)",
+            Style::default().fg(mustard).add_modifier(Modifier::BOLD),
+        )),
+        Line::from(""),
+        Line::from("  • Golang, Ruby"),
+        Line::from("  • Distributed Systems"),
+        Line::from(""),
+        Line::from(Span::styled(
+            "Qualcomm — Incoming Fall 2026 (Compiler Toolchain Intern)",
+            Style::default().fg(mustard).add_modifier(Modifier::BOLD),
+        )),
+        Line::from(""),
+        Line::from("  • C++, ARM Assembly"),
+        Line::from("  • LLVM-based toolchains"),
+    ];
+
+    let paragraph = Paragraph::new(lines)
+        .style(Style::default().fg(Color::Gray))
+        .block(
+            Block::default()
+                .title(" Experience ")
+                .borders(Borders::ALL)
+                .border_style(Style::default().fg(Color::DarkGray)),
+        )
+        .scroll((app.scroll, 0));
+
+    let block = paragraph
         .scroll((app.scroll, 0))
         .style(Style::default().fg(Color::Gray))
         .block(
@@ -166,21 +188,75 @@ fn render_projects(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, bo
     frame.render_widget(list, split[0]);
 
     // RIGHT PANEL (Preview)
-    let preview_text = match app.projects[app.project_index] {
-        "Glazel" => "Distributed build cache\nGo · Redis · CLI",
-        "GameDaddy" => "GameBoy emulator\nC++20 · SDL2",
-        "DecentClang" => "Compiler pipeline\nRust · LLVMlite",
-        _ => "",
+    let (title, tech, logo): (&str, &str, &[&str]) = match app.projects[app.project_index] {
+        "Glazel" => (
+            "Distributed build cache",
+            "Go · Redis · CLI",
+            &[
+                "        ____",
+                "      /_____/|",
+                "     /_____/ |",
+                "    /_____/  |",
+                "    |_____|  /",
+                "    |_____| /",
+                "    |_____|/",
+            ],
+        ),
+        "GameDaddy" => (
+            "GameBoy emulator",
+            "C++20 · SDL2",
+            &[
+                "   .───────────.",
+                "   |  [====]    |",
+                "   |  (o)  (o)  |",
+                "   '───────────'",
+            ],
+        ),
+        "DecentClang" => (
+            "Compiler pipeline",
+            "Rust · LLVMlite",
+            &[
+                "   src  →  IR  →  ASM",
+                "   ───      ──      ───",
+                "    ░░      ▒▒      ███",
+            ],
+        ),
+        _ => ("", "", &[]),
     };
 
-    let preview = Paragraph::new(preview_text)
-        .style(Style::default().fg(Color::Gray))
+    let mut lines: Vec<Line> = Vec::new();
+
+    if !title.is_empty() {
+        lines.push(Line::from(Span::styled(
+            title,
+            Style::default()
+                .fg(Color::Gray)
+                .add_modifier(Modifier::BOLD),
+        )));
+        lines.push(Line::from(Span::styled(
+            tech,
+            Style::default().fg(Color::DarkGray),
+        )));
+    }
+
+    lines.push(Line::from(""));
+    lines.push(Line::from(""));
+
+    for l in logo {
+        lines.push(Line::from(Span::styled(
+            *l,
+            Style::default().fg(mustard).add_modifier(Modifier::BOLD),
+        )));
+    }
+
+    let preview = Paragraph::new(lines)
         .block(
             Block::default()
                 .title(" Preview ")
                 .borders(Borders::ALL)
                 .border_style(Style::default().fg(Color::DarkGray)),
-        );
+        )
+        .style(Style::default().fg(Color::Gray));
 
     frame.render_widget(preview, split[1]);
 }
