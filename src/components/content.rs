@@ -9,16 +9,21 @@ use ratatui::{
 };
 
 pub fn render_content(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
+    let border_color = if app.scroll > 0 {
+        Color::Rgb(184, 134, 11)
+    } else {
+        Color::DarkGray
+    };
     match app.section {
-        Section::Projects => render_projects(frame, area, app),
-        Section::Home => render_home(frame, area, app),
-        Section::Experience => render_experience(frame, area, app),
-        Section::Systems => render_systems(frame, area, app),
-        Section::Contact => render_contact(frame, area, app),
+        Section::Projects => render_projects(frame, area, app, border_color),
+        Section::Home => render_home(frame, area, app, border_color),
+        Section::Experience => render_experience(frame, area, app, border_color),
+        Section::Systems => render_systems(frame, area, app, border_color),
+        Section::Contact => render_contact(frame, area, app, border_color),
     }
 }
 
-pub fn render_experience(frame: &mut Frame, area: Rect, app: &App) {
+pub fn render_experience(frame: &mut Frame, area: Rect, app: &App, border_color: Color) {
     let text = "Shopify — Software Engineering Intern\n\
          \n\
          - Backend systems\n\
@@ -38,13 +43,13 @@ pub fn render_experience(frame: &mut Frame, area: Rect, app: &App) {
             Block::default()
                 .title(" Experience ")
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(Color::DarkGray)),
+                .border_style(Style::default().fg(border_color)),
         );
 
     frame.render_widget(block, area);
 }
 
-fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
+fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, border_color: Color) {
     let text = "Systems Focus\n\
          \n\
          - Cache invalidation strategies\n\
@@ -65,13 +70,13 @@ fn render_systems(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
             Block::default()
                 .title(" Systems ")
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(Color::DarkGray)),
+                .border_style(Style::default().fg(border_color)),
         );
 
     frame.render_widget(block, area);
 }
 
-fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
+fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, border_color: Color) {
     let text = "GitHub\n\
          https://github.com/Waterfountain10\n\
          \n\
@@ -91,13 +96,13 @@ fn render_contact(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
             Block::default()
                 .title(" Contact ")
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(Color::DarkGray)),
+                .border_style(Style::default().fg(border_color)),
         );
 
     frame.render_widget(block, area);
 }
 
-fn render_home(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
+fn render_home(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, border_color: Color) {
     let text = "Embedded Systems Engineer\n\
          \n\
          Incoming Shopify × Qualcomm\n\
@@ -115,13 +120,13 @@ fn render_home(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
             Block::default()
                 .title(" Home ")
                 .borders(Borders::ALL)
-                .border_style(Style::default().fg(Color::DarkGray)),
+                .border_style(Style::default().fg(border_color)),
         );
 
     frame.render_widget(block, area);
 }
 
-fn render_projects(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
+fn render_projects(frame: &mut Frame, area: ratatui::layout::Rect, app: &App, border_color: Color) {
     let mustard = Color::Rgb(184, 134, 11);
 
     if app.view_mode == ViewMode::ProjectDetail {
@@ -154,7 +159,7 @@ fn render_projects(frame: &mut Frame, area: ratatui::layout::Rect, app: &App) {
         Block::default()
             .title(" Projects ")
             .borders(Borders::ALL)
-            .border_style(Style::default().fg(Color::DarkGray)),
+            .border_style(Style::default().fg(border_color)),
     );
 
     frame.render_widget(list, split[0]);
