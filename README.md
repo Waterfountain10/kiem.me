@@ -1,3 +1,8 @@
-```ssh guest@kiemistaken.me``` 
+```bash
+ssh guest@kiemistaken.me
+``` 
 
-password: ```rust```
+password: 
+```bash
+rust
+```
