@@ -1,3 +1,3 @@
-```bash
-ssh kiemistaken.me
-```
+```ssh guest@kiemistaken.me``` 
+
+password: ```rust```
